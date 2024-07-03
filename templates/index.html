@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Genre Prediction</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background: #f2f3f8;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding-bottom: 100px; /* Height of the footer */
+        }
+
+        .navbar {
+            background: #3f51b5;
+            color: #fff;
+        }
+
+        .navbar-brand {
+            color: #fff;
+        }
+
+        .btn-outline-primary {
+            color: #fff;
+            border-color: #fff;
+        }
+
+        .btn-outline-primary:hover {
+            color: #3f51b5;
+            background-color: #fff;
+            border-color: #fff;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: none;
+        }
+
+        footer {
+            background: #3f51b5;
+            color: #fff;
+            padding: 20px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer-link {
+            color: #fff;
+        }
+
+        .footer-link:hover {
+            text-decoration: none;
+            color: #ddd;
+        }
+
+        .custom-file-label::after {
+            content: "Browse";
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Music Genre Classification</a>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="card mt-4 mx-auto" style="max-width: 80%;">
+        <div class="card-body">
+            <h3 class="text-center">Discover the Soul of Music</h3>
+            <p class="text-center">Let music be the soundtrack of your journey. Explore genres that resonate with your soul, from the rhythmic beats of jazz to the electrifying energy of rock.</p>
+            <p class="text-center"><small class="text-muted">Immerse yourself in the diverse melodies and harmonies that define every genre. Experience music like never before with our genre prediction tool.</small></p>
+        </div>
+        
+
+
+    </div>
+
+    <div class="container text-center mt-4">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h1 class="mb-4">Genre Prediction</h1>
+                <form action="/upload" method="post" enctype="multipart/form-data">
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="fileInput" name="file" accept=".wav" required onchange="updateFileName(this)">
+                            <label class="custom-file-label" for="fileInput">Choose a .wav file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Predict</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Audio player -->
+                <audio controls id="audioPlayer" style="width: 100%;">
+                    <source src="" type="audio/wav" id="audioSource">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center mt-4">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                {% if predicted_genre %}
+                <h2 class="text-success">The predicted Genre for the audio file is: {{ predicted_genre }}</h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-4">
+        <div class="container">
+            <p><a href="#" class="footer-link">Back to top</a></p>
+            <p>© 2023-2024 Music Genre Classifier made with love by Shams & Jaspreet</p>
+        </div>
+    </footer>
+
+    <script>
+        function updateFileName(input) {
+            var fileName = input.files[0].name;
+            var label = input.nextElementSibling;
+            label.innerText = fileName;
+
+            // Update audio player source
+            var audioPlayer = document.getElementById('audioPlayer');
+            var audioSource = document.getElementById('audioSource');
+            audioSource.src = URL.createObjectURL(input.files[0]);
+            audioPlayer.load();
+        }
+    </script>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
